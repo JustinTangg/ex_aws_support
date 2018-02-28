@@ -1,9 +1,0 @@
-{application,ex_aws_support,
-             [{applications,[kernel,stdlib,elixir,logger,poison,hackney,
-                             ex_doc,sweet_xml,ex_aws]},
-              {description,"ex_aws_support"},
-              {modules,['Elixir.ExAws.Support',
-                        'Elixir.ExAws.Support.Parsers']},
-              {registered,[]},
-              {vsn,"0.1.0"},
-              {extra_applications,[logger]}]}.
