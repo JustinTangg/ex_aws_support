@@ -9,7 +9,7 @@ defmodule ExAws.Support do
   #version of the AWS API
   @version "2013-04-15"
 
-  @spec describe_trusted_advisor_check_result(check_id :: binary, language :: binary) :: ExAws.Operation.Query.t()
+  @spec describe_trusted_advisor_check_result(check_id :: binary, language :: binary) :: ExAws.Operation.JSON.t()
   def describe_trusted_advisor_check_result(check_id, language) do
     [
       {:check_id, check_id},
@@ -31,14 +31,14 @@ defmodule ExAws.Support do
   defp request(params, action) do
     action_string = action |> Atom.to_string() |> Macro.camelize()
 
-    %ExAws.Operation.Query{
+    %ExAws.Operation.JSON{
+      http_method: :post,
       path: "/",
-      params: params
+      data: params
               |> filter_nil_params
               |> Map.put("Action", action_string)
               |> Map.put("Version", @version),
-      service: :support,
-      action: action
+      service: :support
       #parser: &ExAws.Support.Parsers.parse/2
     }
   end
