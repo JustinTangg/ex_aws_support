@@ -6,10 +6,13 @@ defmodule ExAws.Support do
   use ExAws.Utils,
     format_type: :xml,
     non_standard_keys: %{}
-  #version of the AWS API
-  @version "2013-04-15"
 
-  @spec describe_trusted_advisor_check_result(check_id :: binary, language :: binary) :: ExAws.Operation.JSON.t()
+  # version of the AWS API
+  @version "20130415"
+  @namespace "AWSSupport"
+
+  @spec describe_trusted_advisor_check_result(check_id :: binary, language :: binary) ::
+          ExAws.Operation.JSON.t()
   def describe_trusted_advisor_check_result(check_id, language) do
     [
       {:check_id, check_id},
@@ -33,13 +36,15 @@ defmodule ExAws.Support do
 
     %ExAws.Operation.JSON{
       http_method: :post,
-      path: "/",
-      data: params
-              |> filter_nil_params
-              |> Map.put("Action", action_string)
-              |> Map.put("Version", @version),
+      headers: [
+        {"x-amz-target", "#{@namespace}_#{@version}.#{action_string}"},
+        {"content-type", "application/x-amz-json-1.1"}
+      ],
+      data:
+        params
+        |> filter_nil_params,
       service: :support
-      #parser: &ExAws.Support.Parsers.parse/2
+      # parser: &ExAws.Support.Parsers.parse/2
     }
   end
 
