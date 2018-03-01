@@ -44,8 +44,11 @@ defmodule ExAws.Support do
         params
         |> filter_nil_params,
       service: :support
-      # parser: &ExAws.Support.Parsers.parse/2
     }
+  end
+
+  defp format_param({:check_id, check_id}) do
+    check_id |> format(prefix: "checkId")
   end
 
   defp format_param({key, parameters}) do
