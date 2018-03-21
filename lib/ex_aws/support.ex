@@ -21,6 +21,22 @@ defmodule ExAws.Support do
     |> build_request(:describe_trusted_advisor_check_result)
   end
 
+  @spec describe_trusted_advisor_checks(language :: binary) :: ExAws.Operation.JSON.t()
+  def describe_trusted_advisor_checks(language) do
+    [
+      {:language, language}
+    ]
+    |> build_request(:describe_trusted_advisor_checks)
+  end
+
+  @spec refresh_trusted_advisor_check(check_id :: binary) :: ExAws.Operation.JSON.t()
+  def refresh_trusted_advisor_check(check_id) do
+    [
+      {:check_id, check_id}
+    ]
+    |> build_request(:refresh_trusted_advisor_check)
+  end
+
   ####################
   # Helper Functions #
   ####################
@@ -49,6 +65,10 @@ defmodule ExAws.Support do
 
   defp format_param({:check_id, check_id}) do
     check_id |> format(prefix: "checkId")
+  end
+
+  defp format_param({:language, language}) do
+    language |> format(prefix: "language")
   end
 
   defp format_param({key, parameters}) do
